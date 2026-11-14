@@ -1,0 +1,7 @@
+vim pyproject.toml => 0.2.0
+git pull
+rm -rf dist/
+pyproject-build
+twine upload dist/*
+git tag v0.2.0
+git push origin v0.2.0

@@ -1,0 +1,33 @@
+# Maintainer: Paolo Pancaldi <pancaldi.paolo@gmail.com>
+pkgname=discern-discord
+pkgver=0.2.0
+pkgrel=1
+pkgdesc="Colored Discord notification indicator for Linux — red for DM/@mention, blue for generic"
+arch=('any')
+url="https://github.com/polpanka/discern-discord"
+license=('MIT')
+depends=(
+    'python'
+    'python-dbus'
+    'python-gobject'
+    'libayatana-appindicator'
+)
+optdepends=('xdotool: focus-based auto-reset when Discord window is active')
+makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
+sha256sums=('SKIP')
+
+build() {
+    cd "$srcdir/$pkgname-$pkgver"
+    python -m build --wheel --no-isolation
+}
+
+package() {
+    cd "$srcdir/$pkgname-$pkgver"
+    python -m installer --destdir="$pkgdir" dist/*.whl
+
+    install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 config/discern-discord.service "$pkgdir/usr/lib/systemd/user/discern-discord.service"
+    install -Dm644 config/discern-discord.desktop "$pkgdir/etc/xdg/autostart/discern-discord.desktop"
+    install -Dm644 config/settings.json "$pkgdir/usr/share/discern-discord/settings.json.default"
+}

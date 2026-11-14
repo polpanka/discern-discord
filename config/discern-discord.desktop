@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=discern-discord
+Comment=Colored tray indicator for Discord notifications
+Exec=discern-discord
+Icon=discern-discord
+Terminal=false
+Categories=Utility;
+X-GNOME-Autostart-enabled=true
